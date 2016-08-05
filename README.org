@@ -130,6 +130,7 @@
   - =cryptography=: For conversion of the modulus and exponent to PEM
   - =requests=: To fetch the JWKS URI
 
+  Here is how we import the dependencies listed above:
   #+NAME: imports
   #+BEGIN_SRC python
     import argparse

@@ -104,6 +104,8 @@ First, we import the libraries that we'll need:
 -   `cryptography`: For conversion of the modulus and exponent to PEM
 -   `requests`: To fetch the JWKS URI
 
+Here is how we import the dependencies listed above:
+
     import argparse
     import base64
     import six

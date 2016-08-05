@@ -21,11 +21,10 @@
   Here is an example of using this tool to get the PEM encoded public
   keys for the "example.okta.com" Okta org:
 
-  #+BEGIN_SRC sh :results code :export both
+  #+BEGIN_SRC sh :results code
     ./jwks_to_pem.py --org example.okta.com
   #+END_SRC
 
-  #+RESULTS:
   #+BEGIN_SRC sh
   Fetching JWKS from example.okta.com
   PEM for KID 're7eOFV6SiygSbCyYHGGdERFCJ_EoNpi9Duv0FIxllo'

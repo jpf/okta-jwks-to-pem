@@ -9,6 +9,29 @@ keys for the "example.okta.com" Okta org:
 
     ./jwks_to_pem.py --org example.okta.com
 
+    Fetching JWKS from example.okta.com
+    PEM for KID 're7eOFV6SiygSbCyYHGGdERFCJ_EoNpi9Duv0FIxllo'
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgVdVgO4RogxtWt4XN2vO
+    9SG3Ekt6Qh+k6Io28dTNjEWuNxCYCtQI2dFtFs2y7OyLxQ2e3491XTDVRxtUx/Kl
+    RhQCcGDtLM5vTRWtGo39heg9dLWv7mqlk+jVkJrK2vAO+0bfl0x2Ouov4VS4Ixwx
+    lJfaec8v0cw+xjcJc29Y28WNFYhW/wpf1uEHYAf/pQ9q7S25rhK5yPv23101P7pA
+    bCNDyFB6PYLuXxqkE7dq7rIZXfw5xgNQBRugBrSmUEjoCFs3XowAXCk2gWhM/1Lg
+    mSqaaAh/Cu5vvzM0wYoaEi598LWYmtgurQ3C2Nenu8HVjI+zCSg8v7VrcTa1MHua
+    owIDAQAB
+    -----END PUBLIC KEY-----
+    
+    PEM for KID 'kTP2cLZY0qA2qfnedNEgx6rs6yqIEdf4DQYYV2m4KPQ'
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjKb91FLaoZe9/5NEMZrO
+    1eDn4hdrhtjrvsy+qO1QIbbdhRXJIJoE+qpHmgmq1gK28OZCV51xUAwk8ugw5p7/
+    m2wIarykHtXuBmhcFPkWez6N/yX30qvdOPPKUGqd05AoGcrzAW6fV07CRROU+5g1
+    RnTdNasLEMYaq0xPlmCMDjb3usyiafGyyrwg4+tndOTry4uMtF7LeTVLZo9Tnn2x
+    dJiytWWh+Rq5/KAn1mJ2GgwG8tp8o7SRf65c0LYQenN1d6vXX/Iimq/mg//B5CHP
+    zIaUrZfoL+2sbRIyQ5AePlDyn8Neg6sIsV9nTkPAcYvvQsS+/8xnfNq6np0zKbua
+    dQIDAQAB
+    -----END PUBLIC KEY-----
+
 # Installing
 
 This Python script depends on the `cryptography` and `requests` Python

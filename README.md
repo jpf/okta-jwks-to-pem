@@ -129,8 +129,15 @@ help text if the `--org` argument isn't present.
     args = arg_parser.parse_args()
 
 Next up is the the code that handles the ugly job of decoding and properly padding
-the base64url encoded strings that are used in a JWK. This code
-comes from: <https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py> 
+the base64url encoded strings that are used in a JWK. 
+
+This is easily the most frustrating part of dealing with a
+JWK. Particularly annoying is the fact that the keys are not Base64
+encoded, the are *Base64url* encoded. Which means that we need to take
+special precautions for padding and decoding. Thankfully, I was able
+to find some code that already does this, written by the prolific
+and talented [Roland Hedberg](https://github.com/rohe): The functions below come from:
+<https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py>
 
     def intarr2long(arr):
         return int(''.join(["%02x" % byte for byte in arr]), 16)

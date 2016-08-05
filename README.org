@@ -167,7 +167,7 @@
   encoded, the are /Base64url/ encoded. Which means that we need to take
   special precautions for padding and decoding. Thankfully, I was able
   to find some code that already does this, written by the prolific
-  and talented [[https://github.com/rohe][Roland Hedberg]]: The functions below come from:
+  and talented [[https://github.com/rohe][Roland Hedberg]]. The functions below come from:
   https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py
 
   #+NAME: base64url-to-int

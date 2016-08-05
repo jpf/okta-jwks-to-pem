@@ -136,7 +136,7 @@ JWK. Particularly annoying is the fact that the keys are not Base64
 encoded, the are *Base64url* encoded. Which means that we need to take
 special precautions for padding and decoding. Thankfully, I was able
 to find some code that already does this, written by the prolific
-and talented [Roland Hedberg](https://github.com/rohe): The functions below come from:
+and talented [Roland Hedberg](https://github.com/rohe). The functions below come from:
 <https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py>
 
     def intarr2long(arr):

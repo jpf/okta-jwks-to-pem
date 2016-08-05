@@ -7,9 +7,7 @@ public key, suitable for use in tools like [jwt.io](https://jwt.io)
 Here is an example of using this tool to get the PEM encoded public
 keys for the "example.okta.com" Okta org:
 
-    /nix/store/g7wllqq33dc8a8dsb6r71wrbd6mz3ykf-nix-1.11.2/bin/nix-shell \
-        -I "nixpkgs=/Users/joel.franusic/.nix-defexpr/channels/nixpkgs" \
-        --command "python jwks_to_pem.py --org example.okta.com"
+    ./jwks_to_pem.py --org example.okta.com
 
 # Installing
 

@@ -146,7 +146,7 @@
 
   Next, we set up =ArgumentParser= to handle the =--org= command line
   argument. The =required=true= option will cause =ArgumentParser= to give
-  help text if the =--org== argument isn't present.
+  help text if the =--org= argument isn't present.
 
   #+NAME: parse-arguments
   #+BEGIN_SRC python
@@ -159,11 +159,9 @@
     args = arg_parser.parse_args()
   #+END_SRC
   
-  The code below handles the ugly job of decoding and properly padding
+  Next up is the the code that handles the ugly job of decoding and properly padding
   the base64url encoded strings that are used in a JWK. This code
-  comes from: 
-
-  https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py 
+  comes from: https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py 
 
   #+NAME: base64url-to-int
   #+BEGIN_SRC python

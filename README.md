@@ -118,7 +118,7 @@ Here is how we import the dependencies listed above:
 
 Next, we set up `ArgumentParser` to handle the `--org` command line
 argument. The `required=true` option will cause `ArgumentParser` to give
-help text if the `--org=` argument isn't present.
+help text if the `--org` argument isn't present.
 
     arg_parser = argparse.ArgumentParser(
         description='JWK to PEM conversion tool')
@@ -128,11 +128,9 @@ help text if the `--org=` argument isn't present.
                             required=True)
     args = arg_parser.parse_args()
 
-The code below handles the ugly job of decoding and properly padding
+Next up is the the code that handles the ugly job of decoding and properly padding
 the base64url encoded strings that are used in a JWK. This code
-comes from: 
-
-<https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py> 
+comes from: <https://github.com/rohe/pyjwkest/blob/master/src/jwkest/__init__.py> 
 
     def intarr2long(arr):
         return int(''.join(["%02x" % byte for byte in arr]), 16)

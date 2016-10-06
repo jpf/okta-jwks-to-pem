@@ -1,6 +1,8 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i python -p python27Packages.requests2 -p python27Packages.cryptography
-
+#! nix-shell -i python -p python27Packages.cryptography
+# This is, essentially, the reverse of "jwks_to_pem.py".
+# Given a PEM encoded public key, it will extract the modulus and exponent
+# from the key and return JWKS formatted JSON
 
 input_key = ""
 

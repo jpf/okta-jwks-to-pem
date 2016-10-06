@@ -172,3 +172,31 @@ each JWK Key ID (`kid`) that we find:
     
         print "PEM for KID '{}'".format(jwk['kid'])
         print pem
+
+# Dependencies
+
+This script depends on the command line tools listed below. These
+requirements should be automatically included via the `nix-shell`
+directives in the script, but are listed below for the sake of
+completeness.
+
+| Name | Version | Description | License |
+| ---- | --- | --- | --- |
+| [requests](https://cryptography.io/) | 2.11.1 | HTTP Requests for Humans | [Apache 2.0 or BSD](https://github.com/pyca/cryptography/blob/master/LICENSE) |
+| [cryptography](http://docs.python-requests.org/en/latest/) | 1.5.2 | Exposes cryptographic recipes and primitives | [Apache 2.0](https://github.com/kennethreitz/requests/blob/master/LICENSE) |
+
+# License information
+
+    Copyright © 2016, Okta, Inc.
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    
+      http://www.apache.org/licenses/LICENSE-2.0
+    
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.

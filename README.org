@@ -223,3 +223,109 @@
 
     <<process-jwks>>
   #+END_SRC
+* Requirements							   :noexport:
+  #+TBLNAME: requirements-table
+  |--------------+----------+---------+----------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------|
+  | name         | equality | version | description                                  | url                                        | license           | license_url                                                  |
+  |--------------+----------+---------+----------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------|
+  | requests     | >=       |  2.11.1 | HTTP Requests for Humans                     | https://cryptography.io/                   | Apache 2.0 or BSD | https://github.com/pyca/cryptography/blob/master/LICENSE     |
+  | cryptography | >=       |   1.5.2 | Exposes cryptographic recipes and primitives | http://docs.python-requests.org/en/latest/ | Apache 2.0        | https://github.com/kennethreitz/requests/blob/master/LICENSE |
+  |--------------+----------+---------+----------------------------------------------+--------------------------------------------+-------------------+--------------------------------------------------------------|
+** How to turn the table above into a requirements.txt file	   :noexport:
+   To turn the table above into a =requirements.txt= file, we need to
+   do the following:
+   1. Convert the table into an array of dictionaries.
+   2. Iterate through the array of dictionaries and construct output in
+      the =requirements.txt= format, the output must be annotated so
+      that it is written to =requirements.txt= when =M-x
+      org-bable-tangle= is run on this file.
+** Converting the table to an array of dictionaries		   :noexport:
+  The code below is taken verbatim from [[http://stackoverflow.com/a/8414248/3191847][a StackOverflow answer]] by [[http://stackoverflow.com/users/174728/john-la-rooy][John
+  La Rooy]]. This code takes the table above as an array of arrays and
+  returns an array of dictionaries, where the key is the column name
+  and the value is the column content. This array of dictionaries is
+  used below to generate the =requirements.txt= file.
+  #+NAME: table-to-dict
+  #+BEGIN_SRC python :var table=requirements-table :results code :cache yes
+    headers = table[0]
+    values = table[1:]
+
+    from functools import partial
+    from itertools import izip, imap
+    data = map(dict, imap(partial(izip, headers), values))
+
+    return data
+  #+END_SRC
+  #+RESULTS[7f787f8512ce1f4160f632055852f2b43fb5dbed]: table-to-dict
+  #+BEGIN_SRC python
+  [{'equality': '>=', 'name': 'requests', 'license': 'Apache 2.0 or BSD', 'url': 'https://cryptography.io/', 'version': '2.11.1', 'license_url': 'https://github.com/pyca/cryptography/blob/master/LICENSE', 'description': 'HTTP Requests for Humans'}, {'equality': '>=', 'name': 'cryptography', 'license': 'Apache 2.0', 'url': 'http://docs.python-requests.org/en/latest/', 'version': '1.5.2', 'license_url': 'https://github.com/kennethreitz/requests/blob/master/LICENSE', 'description': 'Exposes cryptographic recipes and primitives'}]
+  #+END_SRC
+
+** Creating the =requirements.txt= file				   :noexport:
+  This code takes the requirements table above and turns it into a
+  =requirements.txt= file that will get exported when =M-x
+  org-bable-tangle= is run.
+
+  #+HEADER: :results_switches ":tangle requirements.txt :noweb yes :exports none :padline no"
+  #+BEGIN_SRC python :var table=requirements-table :results code :noweb yes :cache yes
+    data = <<table-to-dict(requirements-table)>>
+    output = ''
+    for package in data:
+	if not package['name']:
+	    continue
+	output += "{name}{equality}{version}\n".format(**package)
+    return output
+  #+END_SRC
+
+  #+RESULTS[c159eb05f7c3ed9feb34f214884ca276a9cc10aa]:
+  #+BEGIN_SRC python :tangle requirements.txt :noweb yes :exports none :padline no
+  requests>=2.11.1
+  cryptography>=1.5.2
+  #+END_SRC
+
+* Dependencies
+  This script depends on the command line tools listed below. These
+  requirements should be automatically included via the =nix-shell=
+  directives in the script, but are listed below for the sake of
+  completeness.
+
+  #+BEGIN_SRC python :var table=requirements-table :results html :noweb yes :cache yes :exports results
+    data = <<table-to-dict(requirements-table)>>
+    output = "| Name | Version | Description | License |\n"
+    output += "| ---- | --- | --- | --- |\n"
+    for package in data:
+	if not package['name']:
+	    continue
+	output += "| [{name}]({url}) | {version} | {description} | [{license}]({license_url}) |\n".format(**package)
+    return output
+  #+END_SRC
+
+  #+RESULTS[2f1bc451b8a6bfd5e67a98ad8965a7823fac6016]:
+  #+BEGIN_HTML
+  | Name | Version | Description | License |
+  | ---- | --- | --- | --- |
+  | [requests](https://cryptography.io/) | 2.11.1 | HTTP Requests for Humans | [Apache 2.0 or BSD](https://github.com/pyca/cryptography/blob/master/LICENSE) |
+  | [cryptography](http://docs.python-requests.org/en/latest/) | 1.5.2 | Exposes cryptographic recipes and primitives | [Apache 2.0](https://github.com/kennethreitz/requests/blob/master/LICENSE) |
+  #+END_HTML
+
+* License information
+  #+NAME: license
+  #+BEGIN_SRC text :tangle LICENSE.txt :padline no
+    Copyright © 2016, Okta, Inc.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+  #+END_SRC
+* To do								   :noexport:
+** DONE Add "dependencies" list
+** DONE Generate =requirements.txt= file from dependencies
+** DONE Add license

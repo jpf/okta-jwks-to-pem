@@ -22,7 +22,7 @@
   keys for the "example.okta.com" Okta org:
 
   #+BEGIN_SRC sh :results code
-    ./jwks_to_pem.py --org example.okta.com
+    ./jwks_to_pem.py --url example.okta.com
   #+END_SRC
 
   #+BEGIN_SRC sh
@@ -86,7 +86,7 @@
      #+END_SRC
   4. Run the script:
      #+BEGIN_SRC sh
-     ./jwks-to-pem.py --org example.okta.org
+     ./jwks-to-pem.py --url example.okta.org
      #+END_SRC
 * How it works
   The most important part of this code is the conversion of RSA public
@@ -123,7 +123,7 @@
   We cover the rest of the script below.
 
   First, we import the libraries that we'll need:
-  - =argparse=: For handling the =--org== command line argument and giving
+  - =argparse=: For handling the =--url== command line argument and giving
     help when it isn't present.
   - =base64=, =six=, =struct=: Used to properly decode the Base64url encoded modulus
     and exponent.
@@ -144,15 +144,15 @@
     import requests
   #+END_SRC
 
-  Next, we set up =ArgumentParser= to handle the =--org= command line
+  Next, we set up =ArgumentParser= to handle the =--url= command line
   argument. The =required=true= option will cause =ArgumentParser= to give
-  help text if the =--org= argument isn't present.
+  help text if the =--url= argument isn't present.
 
   #+NAME: parse-arguments
   #+BEGIN_SRC python
     arg_parser = argparse.ArgumentParser(
         description='JWK to PEM conversion tool')
-    arg_parser.add_argument('--org',
+    arg_parser.add_argument('--url',
                             dest='org',
                             help='Domain for Okta org',
                             required=True)

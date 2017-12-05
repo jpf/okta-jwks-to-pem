@@ -7,9 +7,9 @@ public key, suitable for use in tools like [jwt.io](https://jwt.io)
 Here is an example of using this tool to get the PEM encoded public
 keys for the "example.okta.com" Okta org:
 
-    ./jwks_to_pem.py --org example.okta.com
+    ./jwks_to_pem.py --url example.okta.com/.well-known/jwks.json
 
-    Fetching JWKS from example.okta.com
+    Fetching JWKS from example.okta.com/.well-known/jwks.json
     PEM for KID 're7eOFV6SiygSbCyYHGGdERFCJ_EoNpi9Duv0FIxllo'
     -----BEGIN PUBLIC KEY-----
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgVdVgO4RogxtWt4XN2vO
@@ -63,7 +63,7 @@ package manager on GNU/Linux or Macintosh OS X systems:
         cd okta-jwks-to-pem
 4.  Run the script:
     
-        ./jwks-to-pem.py --org example.okta.org
+        ./jwks-to-pem.py --url example.okta.org
 
 # How it works
 
@@ -97,7 +97,7 @@ We cover the rest of the script below.
 
 First, we import the libraries that we'll need:
 
--   `argparse`: For handling the `--org=` command line argument and giving
+-   `argparse`: For handling the `--url=` command line argument and giving
     help when it isn't present.
 -   `base64`, `six`, `struct`: Used to properly decode the Base64url encoded modulus
     and exponent.
@@ -116,15 +116,15 @@ Here is how we import the dependencies listed above:
     from cryptography.hazmat.primitives import serialization
     import requests
 
-Next, we set up `ArgumentParser` to handle the `--org` command line
+Next, we set up `ArgumentParser` to handle the `--url` command line
 argument. The `required=true` option will cause `ArgumentParser` to give
-help text if the `--org` argument isn't present.
+help text if the `--url` argument isn't present.
 
     arg_parser = argparse.ArgumentParser(
         description='JWK to PEM conversion tool')
-    arg_parser.add_argument('--org',
-                            dest='org',
-                            help='Domain for Okta org',
+    arg_parser.add_argument('--url',
+                            dest='url',
+                            help='URL to jwks json object',
                             required=True)
     args = arg_parser.parse_args()
 

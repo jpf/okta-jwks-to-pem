@@ -13,9 +13,9 @@ import requests
 
 arg_parser = argparse.ArgumentParser(
     description='JWK to PEM conversion tool')
-arg_parser.add_argument('--org',
-                        dest='org',
-                        help='Domain for Okta org',
+arg_parser.add_argument('--url',
+                        dest='url',
+                        help='URL to JWKS json object',
                         required=True)
 args = arg_parser.parse_args()
 
@@ -32,8 +32,8 @@ def base64_to_long(data):
     return intarr2long(struct.unpack('%sB' % len(_d), _d))
 
 
-print("Fetching JWKS from {}".format(args.org))
-r = requests.get("https://{}/oauth2/v1/keys".format(args.org))
+print("Fetching JWKS from {}".format(args.url))
+r = requests.get(args.url)
 jwks = r.json()
 
 for jwk in jwks['keys']:

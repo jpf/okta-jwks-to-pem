@@ -1,3 +1,32 @@
+# NOTICE
+
+This project has been superseded by a new tool I've written called lokey: <https://github.com/jpf/lokey>
+
+lokey does everything that this code does, and more.
+
+For example, to convert a JWKs result to PEM with lokey, you'd do one of the following:
+
+```sh
+$ lokey fetch jwk example.okta.com | lokey to pem
+$ lokey fetch jwk login.salesforce.com | lokey to pem
+$ lokey fetch jwk accounts.google.com | lokey to pem
+```
+
+Note that With lokey, you could also convert to other RSA key formats:
+
+```sh
+$ lokey fetch jwk example.okta.com | lokey to pem
+$ lokey fetch jwk example.okta.com | lokey to ssh
+$ lokey fetch jwk example.okta.com | lokey to pgp --name "John Doe" --email "john.doe@example.com"
+```
+
+I'm keeping this project around because of how thoroughly it is documented in the hope that it'll be useful for somebody wanting to learn about converting between JWK and PEM formats.
+
+However, I will not be doing any further development on this project and encourage you to use lokey instead.
+
+Joël Franusic November 6th, 2017
+
+
 # Introduction
 
 This is a Python script that fetches JWKS results, and for
@@ -20,7 +49,7 @@ keys for the "example.okta.com" Okta org:
     mSqaaAh/Cu5vvzM0wYoaEi598LWYmtgurQ3C2Nenu8HVjI+zCSg8v7VrcTa1MHua
     owIDAQAB
     -----END PUBLIC KEY-----
-    
+
     PEM for KID 'kTP2cLZY0qA2qfnedNEgx6rs6yqIEdf4DQYYV2m4KPQ'
     -----BEGIN PUBLIC KEY-----
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjKb91FLaoZe9/5NEMZrO
@@ -52,17 +81,17 @@ Here is how to install this script on your system using the Nix
 package manager on GNU/Linux or Macintosh OS X systems:
 
 1.  Install the Nix package manager:
-    
+
         curl https://nixos.org/nix/install | sh
 2.  Download the `get_id_token.sh` shell script to your system
-    
+
         git clone git@github.com:jpf/okta-jwks-to-pem.git
 3.  Change to the directory containing the `get_id_token.sh` shell
     script
-    
+
         cd okta-jwks-to-pem
 4.  Run the script:
-    
+
         ./jwks-to-pem.py --org example.okta.org
 
 # How it works
@@ -76,18 +105,18 @@ process:
 
 1.  Convert the JWK modulus and exponent, which are Base64url
     encoded, into integers:
-    
+
         exponent = base64_to_long(jwk['e'])
         modulus = base64_to_long(jwk['n'])
-    
+
     Note: This conversion is actually pretty frustrating, the
     `base64_to_long` function abstracts this all away.
 2.  Use the [RSAPublicNumbers](https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/#cryptography.hazmat.primitives.asymmetric.rsa.RSAPublicNumbers) class to store the modulus and exponent
-    
+
         numbers = RSAPublicNumbers(exponent, modulus)
         public_key = numbers.public_key(backend=default_backend())
 3.  [Serialize the RSAPublicNumbers object](https://cryptography.io/en/latest/hazmat/primitives/asymmetric/serialization/) to PEM
-    
+
         pem = public_key.public_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo
@@ -110,7 +139,7 @@ Here is how we import the dependencies listed above:
     import base64
     import six
     import struct
-    
+
     from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicNumbers
     from cryptography.hazmat.backends import default_backend
     from cryptography.hazmat.primitives import serialization
@@ -129,7 +158,7 @@ help text if the `--org` argument isn't present.
     args = arg_parser.parse_args()
 
 Next up is the the code that handles the ugly job of decoding and properly padding
-the base64url encoded strings that are used in a JWK. 
+the base64url encoded strings that are used in a JWK.
 
 This is easily the most frustrating part of dealing with a
 JWK. Particularly annoying is the fact that the keys are not Base64
@@ -141,12 +170,12 @@ and talented [Roland Hedberg](https://github.com/rohe). The functions below come
 
     def intarr2long(arr):
         return int(''.join(["%02x" % byte for byte in arr]), 16)
-    
-    
+
+
     def base64_to_long(data):
         if isinstance(data, six.text_type):
             data = data.encode("ascii")
-    
+
         # urlsafe_b64decode will happily convert b64encoded data
         _d = base64.urlsafe_b64decode(bytes(data) + b'==')
         return intarr2long(struct.unpack('%sB' % len(_d), _d))
@@ -169,7 +198,7 @@ each JWK Key ID (`kid`) that we find:
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo
         )
-    
+
         print "PEM for KID '{}'".format(jwk['kid'])
         print pem
 
@@ -188,13 +217,13 @@ completeness.
 # License information
 
     Copyright © 2016, Okta, Inc.
-    
+
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
-    
+
       http://www.apache.org/licenses/LICENSE-2.0
-    
+
     Unless required by applicable law or agreed to in writing, software
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.

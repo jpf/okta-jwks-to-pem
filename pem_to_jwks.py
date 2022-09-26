@@ -12,7 +12,7 @@ import argparse
 import fileinput
 import sys
 
-from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.serialization import load_pem_public_key
 from cryptography.hazmat.backends import default_backend
 
 
@@ -54,9 +54,8 @@ def long_to_base64(n):
 
 
 pem_data = input_key
-public_key = serialization.load_pem_public_key(
-    input_key,
-    backend=default_backend())
+input_key_bytes = input_key.encode('utf-8')
+public_key = load_pem_public_key(input_key_bytes)
 
 public_numbers = public_key.public_numbers()
 
@@ -74,4 +73,4 @@ jwk['e'] = long_to_base64(public_numbers.e)
 
 import json
 
-print json.dumps(jwk)
+print(json.dumps(jwk))
